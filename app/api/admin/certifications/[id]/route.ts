@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -13,8 +13,9 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id } = await params;
     const data = await request.json();
-    const certification = db.updateCertification(params.id, data);
+    const certification = db.updateCertification(id, data);
 
     if (!certification) {
       return NextResponse.json(
@@ -34,7 +35,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -42,7 +43,8 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const success = db.deleteCertification(params.id);
+    const { id } = await params;
+    const success = db.deleteCertification(id);
 
     if (!success) {
       return NextResponse.json(
