@@ -7,8 +7,17 @@ import Button from "@/components/ui/Button";
 import { db } from "@/lib/db";
 import { Shield, FileText, Palette, Users, Settings } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
-  const session = await getServerSession(authOptions);
+  let session;
+
+  try {
+    session = await getServerSession(authOptions);
+  } catch (error) {
+    console.error("Auth error:", error);
+    redirect("/admin/login");
+  }
 
   if (!session) {
     redirect("/admin/login");

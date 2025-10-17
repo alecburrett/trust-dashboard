@@ -25,7 +25,7 @@ class Database {
   }
 
   private seedDefaultData() {
-    // Default branding
+    // Initialize with minimal branding config only
     this.brandingConfig = {
       id: "default",
       companyName: "Your Company",
@@ -36,75 +36,8 @@ class Database {
       updatedAt: new Date(),
     };
 
-    // Default certifications
-    const defaultCerts: Omit<Certification, "id" | "createdAt" | "updatedAt">[] = [
-      {
-        name: "SOC 2 Type II",
-        type: "SOC2",
-        status: "active",
-        description: "Service Organization Control 2 certification",
-      },
-      {
-        name: "ISO 27001",
-        type: "ISO27001",
-        status: "active",
-        description: "Information Security Management certification",
-      },
-      {
-        name: "GDPR Compliant",
-        type: "GDPR",
-        status: "active",
-        description: "General Data Protection Regulation compliance",
-      },
-    ];
-
-    defaultCerts.forEach((cert, index) => {
-      const id = `cert-${index}`;
-      this.certifications.set(id, {
-        ...cert,
-        id,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-    });
-
-    // Default security controls
-    const defaultControls: Omit<SecurityControl, "id" | "createdAt" | "updatedAt">[] = [
-      {
-        name: "Multi-Factor Authentication",
-        category: "Access Control",
-        status: "active",
-        description: "MFA required for all user accounts",
-      },
-      {
-        name: "Data Encryption at Rest",
-        category: "Data Security",
-        status: "active",
-        description: "AES-256 encryption for all stored data",
-      },
-      {
-        name: "Regular Security Audits",
-        category: "Compliance",
-        status: "active",
-        description: "Quarterly security assessments and audits",
-      },
-      {
-        name: "Intrusion Detection System",
-        category: "Network Security",
-        status: "monitoring",
-        description: "24/7 monitoring for suspicious activity",
-      },
-    ];
-
-    defaultControls.forEach((control, index) => {
-      const id = `control-${index}`;
-      this.securityControls.set(id, {
-        ...control,
-        id,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-    });
+    // No mock data - all other data starts empty
+    // Add certifications, controls, and documents through the admin dashboard
   }
 
   // Branding Config Methods
